@@ -1,0 +1,43 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.board-section{
+    margin-top: 20px;
+}
+.grid{
+    display: grid;
+    grid-template-rows: 100px 100px 100px;
+    grid-template-columns: 100px 100px 100px;
+    width: 300px;
+    margin: auto;
+    position: relative;
+    
+}
+
+.cell{
+    border: solid 1px black;
+}
+
+.current-player{
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 100px;
+    
+
+}
+#start-button{
+    margin-top: 10px;
+}
+.btn-container{
+    text-align: center;
+}
+
+#winner{
+    text-align: center;
+    margin-top: 20px;
+}
