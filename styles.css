@@ -1,43 +1,106 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body{
+    background-color: #4fb3bf;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
-
-.board-section{
+.board-section {
     margin-top: 20px;
 }
-.grid{
+#main-title{
+    text-align: center;
+    font-size: 3rem;
+    color:#002984;
+    padding:20px 0px;
+    border-bottom: 5px solid #002984;
+    background-color: #757de8;
+}
+
+.grid {
     display: grid;
-    grid-template-rows: 100px 100px 100px;
-    grid-template-columns: 100px 100px 100px;
-    width: 300px;
+    grid-template-rows: 150px 150px 150px;
+    grid-template-columns: 150px 150px 150px;
+    width: 450px;
     margin: auto;
     position: relative;
-    
 }
 
-.cell{
+.cell:nth-child(3n) {
+    border-right: none;
+}
+
+.cell:nth-child(-n+3) {
+    border-top: none;
+}
+
+.cell:nth-child(3n-2) {
+    border-left: none;
+}
+
+.cell:nth-child(n+7) {
+    border-bottom: none;
+}
+
+.cell {
     border: solid 1px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: #001970;
 }
 
-.current-player{
+.current-player {
     text-align: center;
     font-size: 1.5rem;
-    margin-top: 100px;
-    
+    margin-top: 40px;
+}
+
+#start-button {
+    margin-top: 30px;
+    border:none;
+    background:none;
+    font-size: 20px;
+    background-color: #666ad1;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+
 
 }
-#start-button{
-    margin-top: 10px;
+#start-button:hover{
+    background-color: brown;
 }
-.btn-container{
+
+.btn-container {
     text-align: center;
 }
 
-#winner{
+#winner {
     text-align: center;
     margin-top: 20px;
 }
+
+.game-element {
+    font-weight: 900;
+    font-size: 3rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.game-element.x{
+    color:#303f9f
+}
+.game-element.o{
+    color: #003049;
+}
+
+#who-play{
+    text-align: center;
+    margin:20px;
+    font-size: 1.5rem;
+    color: #303f9f;
+}
+

@@ -1,22 +1,22 @@
 const Player = (playerName, playerValue) => {
-    const getName = ()=> playerName;
+    const getName = () => playerName;
     const getValue = () => playerValue
-    
+
     let playingStatus = false;
     const isPlaying = () => playingStatus
     const togglePlaying = () => playingStatus = !playingStatus
-    const setName = (newName) =>{
+    const setName = (newName) => {
         playerName = newName
     }
-    
 
-    return{
+
+    return {
         getName,
         getValue,
         isPlaying,
         togglePlaying,
         setName
-        
+
     }
 
 }
@@ -36,88 +36,89 @@ const gameBoard = (() => {
 
             grid.appendChild(cell)
         }
-       
+    console.log(grid);
+
 
     }
 
-    const checkWin = () =>{
-      
+    const checkWin = () => {
+
         let valuesArray = []
         let whoWon = ''
-        gameArray.forEach(cell =>{
-            if(cell.children[0]=== undefined){
+        gameArray.forEach(cell => {
+            if (cell.children[0] === undefined) {
                 return
             }
             valuesArray[gameArray.indexOf(cell)] = cell.children[0].textContent
-           
+
         })
-        
-         function options(currentValue){
-            if(valuesArray[0]==`${currentValue}`&&valuesArray[1]==`${currentValue}`&&valuesArray[2]==`${currentValue}`){
+
+        function options(currentValue) {
+            if (valuesArray[0] == `${currentValue}` && valuesArray[1] == `${currentValue}` && valuesArray[2] == `${currentValue}`) {
                 return true;
             }
-            else if(valuesArray[3]==`${currentValue}`&&valuesArray[4]==`${currentValue}`&&valuesArray[5]==`${currentValue}`){
+            else if (valuesArray[3] == `${currentValue}` && valuesArray[4] == `${currentValue}` && valuesArray[5] == `${currentValue}`) {
                 return true;
             }
-            else if(valuesArray[6]==`${currentValue}`&&valuesArray[7]==`${currentValue}`&&valuesArray[8]==`${currentValue}`){
+            else if (valuesArray[6] == `${currentValue}` && valuesArray[7] == `${currentValue}` && valuesArray[8] == `${currentValue}`) {
                 return true;
             }
-            else if(valuesArray[0]==`${currentValue}`&&valuesArray[4]==`${currentValue}`&&valuesArray[8]==`${currentValue}`){
+            else if (valuesArray[0] == `${currentValue}` && valuesArray[4] == `${currentValue}` && valuesArray[8] == `${currentValue}`) {
                 return true;
             }
-            else if(valuesArray[0]==`${currentValue}`&&valuesArray[3]==`${currentValue}`&&valuesArray[6]==`${currentValue}`){
+            else if (valuesArray[0] == `${currentValue}` && valuesArray[3] == `${currentValue}` && valuesArray[6] == `${currentValue}`) {
                 return true;
             }
-            else if(valuesArray[1]==`${currentValue}`&&valuesArray[4]==`${currentValue}`&&valuesArray[7]==`${currentValue}`){
+            else if (valuesArray[1] == `${currentValue}` && valuesArray[4] == `${currentValue}` && valuesArray[7] == `${currentValue}`) {
                 return true
             }
-            else if(valuesArray[2]==`${currentValue}`&&valuesArray[5]==`${currentValue}`&&valuesArray[8]==`${currentValue}`){
+            else if (valuesArray[2] == `${currentValue}` && valuesArray[5] == `${currentValue}` && valuesArray[8] == `${currentValue}`) {
                 return true
             }
-            else if(valuesArray[2]==`${currentValue}`&&valuesArray[4]==`${currentValue}`&&valuesArray[6]==`${currentValue}`){
+            else if (valuesArray[2] == `${currentValue}` && valuesArray[4] == `${currentValue}` && valuesArray[6] == `${currentValue}`) {
                 return true
             }
-            else{
+            else {
                 return false
             }
         }
-        if(options('X')){
-            displayedWinner.textContent = 'Player One Won!'
+        if (options('X')) {
+            displayedWinner.textContent = 'X  Won!'
+            displayedWinner.style.color = '#303f9f'
 
             return true;
         }
-        else if(options('O')){
-            displayedWinner.textContent = 'Player Two Won!'
+        else if (options('O')) {
+            displayedWinner.textContent = 'O  Won!'
+            displayedWinner.style.color = '#003049'
+
             return true;
+            
         }
 
-        else if(gameArray.every(isEmpty)){
+        else if (gameArray.every(isEmpty)) {
             displayedWinner.textContent = 'Draw'
             return true;
         }
 
-        function isEmpty(cell){
-            return cell.children[0] !== undefined 
+        function isEmpty(cell) {
+            return cell.children[0] !== undefined
         }
-       
-        
+
+
 
     }
 
-    const resetGameBoard = () =>{
+    const resetGameBoard = () => {
         const cells = document.querySelectorAll('.cell')
         console.log(cells);
 
         displayedWinner.textContent = ''
-        cells.forEach(cell =>{
+        cells.forEach(cell => {
             cell.remove()
         })
         gameArray = []
         createArray()
-        
-        
-       
- 
 
     }
 
@@ -141,101 +142,115 @@ const gameBoard = (() => {
 
 
 
-
-
-
 const game = (() => {
     let allCells = document.querySelectorAll('.cell')
     const playerOne = Player('First', 'X')
     const playerTwo = Player('Second', 'O')
     playerOne.togglePlaying()
-
     gameBoard.createArray()
 
     const btnStart = document.querySelector('#start-button')
 
 
 
-        const startBtn = () =>{
-             
-            btnStart.addEventListener('click', beginGame, {once:true})
+    const startBtn = () => {
 
+        btnStart.addEventListener('click', beginGame, { once: true })
+
+    }
+
+    const beginGame = () => {
+
+        allCells = document.querySelectorAll('.cell')
+        allCells.forEach(cell => {
+            cell.addEventListener('click', playerTurn, { once: true })
+        })
+    }
+
+
+
+
+    function playerTurn(e) {
+
+        playerOne.isPlaying() ? turnRender(e, playerOne) : turnRender(e, playerTwo);
+
+    }
+
+
+
+    function turnRender(event, currentPlayer) {
+
+
+  
+
+        turnUI(event, currentPlayer)
+
+        playerOne.togglePlaying();
+        playerTwo.togglePlaying();
+
+        currentPlayer.getName() == 'First' ? changePlayingName(playerTwo.getValue()) : changePlayingName(playerOne.getValue())
+        console.log(gameBoard.gameArray);
+
+        if (gameBoard.checkWin()) {
+            stopGame()
+
+            restartGame(currentPlayer)
         }
+    }
 
-        const beginGame = () =>{
-           
-            allCells = document.querySelectorAll('.cell')   
-            allCells.forEach(cell =>{
-                cell.addEventListener('click', playerTurn, {once:true})
-            })
+    function turnUI(event, currentPlayer){
+        
+        let gameElement = document.createElement('p')
+        gameElement.textContent = currentPlayer.getValue()
+        gameElement.classList.add('game-element')
+        gameElement.textContent == 'X'? gameElement.classList.add('x'): gameElement.classList.add('o')
+
+   
+        event.target.appendChild(gameElement)
+    }
+
+    function changePlayingName(newName) {
+        let nameElement = document.querySelector('#who-play')
+        nameElement.textContent = newName + "'s" +  " Player turn"
+        if(newName == 'X'){
+            nameElement.style.color = '#303f9f'
         }
-                
-            
-    
-    
-            function playerTurn(e){
-            
-                playerOne.isPlaying() ? turnRender(e, playerOne): turnRender(e, playerTwo);
-                
-            }
-            
-
-    
-            function turnRender(event, currentPlayer){
-
-                   
-                console.log(currentPlayer.getName());
-                    gameElement = document.createElement('p')
-                    gameElement.textContent = currentPlayer.getValue()
-                    event.target.appendChild(gameElement)
-                    playerOne.togglePlaying();
-                    playerTwo.togglePlaying();
-                    
-                    currentPlayer.getName() == 'First' ? changePlayingName(playerTwo.getName()): changePlayingName(playerOne.getName())
-                    console.log(gameBoard.gameArray);
-                
-                    if(gameBoard.checkWin()){
-                        stopGame()
-                        
-                        restartGame(currentPlayer)
-                    }
-            }
-
-            function changePlayingName(newName){
-                let nameElement = document.querySelector('#who-play')
-                nameElement.textContent = newName + " Player's turn" 
-            }
-
-       
-           function stopGame(){
-               allCells.forEach(cell =>{
-                cell.removeEventListener('click', playerTurn)
-               })
-           }
-
-            function restartGame(currentPlayer){
-                if(currentPlayer.getName() == 'First'){
-                    playerOne.togglePlaying();
-                    playerTwo.togglePlaying();
-                    changePlayingName(playerOne.getName())
-                }
-                btnStart.textContent = 'restart'
-                btnStart.addEventListener('click', ()=>{
-                    gameBoard.resetGameBoard();
-                    beginGame()
-                    
-                })
-            }
-            
-       
-            
-
-    
-        return{
-            startBtn
+        else{
+            nameElement.style.color = '#003049'
         }
-    
-    
-    })()
+      
+    }
+
+
+    function stopGame() {
+        allCells.forEach(cell => {
+            cell.removeEventListener('click', playerTurn)
+        })
+    }
+
+    function restartGame(currentPlayer) {
+        if (currentPlayer.getName() == 'First') {
+            playerOne.togglePlaying();
+            playerTwo.togglePlaying();
+            changePlayingName(playerOne.getValue())
+        }
+        btnStart.textContent = 'restart'
+        btnStart.addEventListener('click', () => {
+            gameBoard.resetGameBoard();
+            beginGame()
+
+        })
+    }
+
+
+
+
+
+    return {
+        startBtn
+    }
+
+
+})()
 
 game.startBtn()
